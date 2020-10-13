@@ -1,0 +1,33 @@
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script> 
+</head>
+<body>
+    <img id="img_1" src="coffee.jpg"></img>
+    <div id="output_1" style="font-family:courier;font-size:24px;height:150px"></div>
+    <img id="img_2" src="cat.jpg"></img>
+    <div id="output_2" style="font-family:courier;font-size:24px;height:150px"></div>
+</body>
+<script>
+    const img_1 = document.getElementById('img_1');
+    const outp_1 = document.getElementById('output_1');
+    const img_2 = document.getElementById('img_2');
+    const outp_2 = document.getElementById('output_2');
+
+    mobilenet.load().then(model => {
+        model.classify(img_1).then(predictions => {
+            console.log(predictions);
+            for(var i = 0; i<predictions.length; i++){
+                outp_1.innerHTML += "<br/>" + predictions[i].className + " : " + predictions[i].probability;
+            }
+        });
+        model.classify(img_2).then(predictions => {
+            console.log(predictions);
+            for(var i = 0; i<predictions.length; i++){
+                outp_2.innerHTML += "<br/>" + predictions[i].className + " : " + predictions[i].probability;
+            }
+        });
+    });
+</script>
+</html>
